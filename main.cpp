@@ -1,7 +1,7 @@
 #include <iostream>
 #include <conio.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 using namespace std;
@@ -12,18 +12,35 @@ void readString(FILE *fp,FILE *fp1);
 void readMultiComment(FILE *fp,FILE *fp1,int nb);
 void readSingleComment(FILE *fp,FILE *fp1,int nb);
 void readShortString(FILE *fp,FILE *fp1);
+
+//no.of spaces
 int sp;
 
-int main()
+int main(int argc, char* argv[])
 {
     int nb=0;
     FILE *fp,*fp1;
     char name[20],t = '\0',c;
-    cout << "Enter the File Name : ";
-    gets(name);
-    cout << "Enter the no. of spaces you want to give : ";
-    cin >> sp;
-    fp = fopen(name,"r");
+
+    if(argc == 2)
+    {
+        fp = fopen(argv[1],"r");
+        sp = 4;
+    }
+    else if(argc == 3)
+    {
+        fp = fopen(argv[1],"r");
+        sp = atoi(argv[2]);
+    }
+    else
+    {
+        cout << "Enter the File Name : ";
+        gets(name);
+        cout << "Enter the no. of spaces you want to give : ";
+        cin >> sp;
+        fp = fopen(name,"r");
+    }
+
     fp1 = fopen("temp.txt","w");
     if(fp == NULL || fp1 == NULL)
     {
@@ -31,6 +48,7 @@ int main()
         getch();
         return 0;
     }
+
     c = fgetc(fp);
     while (!feof(fp))
     {
